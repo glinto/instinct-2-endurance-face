@@ -64,7 +64,7 @@ class MyWeatherConditions {
             var idx = cache[:conditionType];
             dc.setClip(x, y, CONDITION_BITMAP_WIDTH, CONDITION_BITMAP_HEIGHT);
             dc.drawBitmap(x - idx * CONDITION_BITMAP_WIDTH, y, conditionsBitmap);
-            dc.setClip(0, 0, dc.getWidth(), dc.getHeight());
+            dc.clearClip();
         }
     }
 
@@ -222,7 +222,7 @@ class BitmapTextDrawer {
                 dc.drawBitmap(x + i * 6 - numidx * 6, y, BitmapTextDrawer.numbersBitmap);
             }
         }
-        dc.setClip(0, 0, dc.getWidth(), dc.getHeight());
+        dc.clearClip();
     }
 }
 
