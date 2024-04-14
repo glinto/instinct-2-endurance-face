@@ -114,6 +114,7 @@ class Instinct2EnduranceView extends WatchUi.WatchFace {
     }
 
     var myconditions as MyWeatherConditions;
+    var sleeping as Boolean = false;
  
     function initialize() {
         WatchFace.initialize();
@@ -150,6 +151,10 @@ class Instinct2EnduranceView extends WatchUi.WatchFace {
 
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
+
+        if (!sleeping) {
+            BitmapTextDrawer.draw(dc, 59, 121, clockTime.sec.format("%02d"));
+        }
 
         myconditions.load();
         if (myconditions != null) {
@@ -191,11 +196,13 @@ class Instinct2EnduranceView extends WatchUi.WatchFace {
     // The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() as Void {
         System.println("onExitSleep");
+        sleeping = false;
     }
 
     // Terminate any active timers and prepare for slow updates.
     function onEnterSleep() as Void {
         System.println("onEnterSleep");
+        sleeping = true;
     }
 
 }
