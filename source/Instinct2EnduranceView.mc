@@ -16,6 +16,17 @@ class MyWeatherConditions {
         PARTLY_CLOUDY
     }
 
+    enum {
+        NORTH,
+        NORTHEAST,
+        EAST,
+        SOUTHEAST,
+        SOUTH,
+        SOUTHWEST,
+        WEST,
+        NORTHWEST
+    }
+
     const CONDITION_BITMAP_WIDTH = 18;
     const CONDITION_BITMAP_HEIGHT = 16;
 
@@ -25,7 +36,9 @@ class MyWeatherConditions {
         :condition as Weather.CurrentConditions,
         :nextSunsetSunrise as Time.Gregorian.Info or Null,
         :conditionType as Number,
-        :lastUpdate as Time.Moment
+        :windBeaufort as Number,
+        :windCardinalDirection as Number,
+        :lastUpdate as Time.Moment,
     } or Null;
 
     const mappedConditions = {
@@ -50,6 +63,8 @@ class MyWeatherConditions {
                 :condition => cnd,
                 :nextSunsetSunrise => getNextSunriseOrSunset(cnd),
                 :conditionType => MyWeatherConditions.CLOUDY,
+                :windBeaufort => beaufortIndex(cnd.windSpeed),
+                :windCardinalDirection => getCardinalDirection(cnd.windBearing),
                 :lastUpdate => Time.now()
             };
            
@@ -96,6 +111,33 @@ class MyWeatherConditions {
 
         }
         return null;
+    }
+
+    function beaufortIndex(windSpeed as Float) as Number {
+        if (windSpeed < 0.3) {return 0;}
+        if (windSpeed <= 1.5) {return 1;}
+        if (windSpeed <= 3.3) {return 2;}
+        if (windSpeed <= 5.4) {return 3;}
+        if (windSpeed <= 7.9) {return 4;}
+        if (windSpeed <= 10.7) {return 5;}
+        if (windSpeed <= 13.8) {return 6;}
+        if (windSpeed <= 17.1) {return 7;}
+        if (windSpeed <= 20.7) {return 8;}
+        if (windSpeed <= 24.4) {return 9;}
+        if (windSpeed <= 28.4) {return 10;}
+        if (windSpeed <= 32.6) {return 11;}
+        return 12;
+    }
+
+    function getCardinalDirection(bearing as Number) as Number {
+        if (bearing < 22.5 || bearing >= 337.5) {return MyWeatherConditions.NORTH;}
+        if (bearing < 67.5) {return MyWeatherConditions.NORTHEAST;}
+        if (bearing < 112.5) {return MyWeatherConditions.EAST;}
+        if (bearing < 157.5) {return MyWeatherConditions.SOUTHEAST;}
+        if (bearing < 202.5) {return MyWeatherConditions.SOUTH;}
+        if (bearing < 247.5) {return MyWeatherConditions.SOUTHWEST;}
+        if (bearing < 292.5) {return MyWeatherConditions.WEST;}
+        return MyWeatherConditions.NORTHWEST;
     }
 
 }
@@ -168,6 +210,8 @@ class Instinct2EnduranceView extends WatchUi.WatchFace {
             BitmapTextDrawer.draw(dc, 66, 24, sunrs.min.format("%02d"));
 
             myconditions.drawConditionBitmap(dc, 134, 9);
+            BitmapTextDrawer.draw(dc, 121, 25, myconditions.cache[:windCardinalDirection].format("%d"));
+            BitmapTextDrawer.draw(dc, 121, 35, myconditions.cache[:windBeaufort].format("%d"));
         }
 
         BitmapTextDrawer.draw(dc, 50, 143, System.getSystemStats().battery.format("%02d"));
