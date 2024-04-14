@@ -1,0 +1,7 @@
+<layout id="WatchFace">
+    <label id="HourLabel" x="33" y="35" font="Graphics.FONT_NUMBER_THAI_HOT" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="MinuteLabel" x="33" y="81" font="Graphics.FONT_NUMBER_THAI_HOT" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="TemperatureLabel" x="145" y="22" font="Graphics.FONT_NUMBER_MILD" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" text="24°" />
+    <bitmap id="Sunrise" x="22" y="21" filename="../drawables/sunrise.png" />
+    <bitmap id="Battery" x="23" y="143" filename="../drawables/battery.png" />
+</layout>
