@@ -15,7 +15,7 @@ module EnduranceWatchFace {
 		:lastUpdate as Time.Moment,
 	};
 
-	const WEATHER_CACHE_TIMEOUT_SEC = 10;
+	const WEATHER_CACHE_TIMEOUT_SEC = 300;
 
 	class WeatherConditions {
 		
