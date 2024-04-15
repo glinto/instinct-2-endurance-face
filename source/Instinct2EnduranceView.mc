@@ -71,8 +71,8 @@ class Instinct2EnduranceView extends WatchUi.WatchFace {
             BitmapTextDrawer.draw(dc, 66, 24, sunrs.min.format("%02d"));
 
             conditions.drawConditionBitmap(dc, 134, 9);
-            BitmapTextDrawer.draw(dc, xpos, 30, cnd[:windCardinalDirection].format("%d"));
-            BitmapTextDrawer.draw(dc, xpos, 40, cnd[:windBeaufort].format("%d"));
+            conditions.drawWindDirection(dc, xpos, 30);
+            BitmapTextDrawer.draw(dc, xpos, 37, cnd[:windBeaufort].format("%d"));
         }
 
         BitmapTextDrawer.draw(dc, 50, 143, System.getSystemStats().battery.format("%02d"));

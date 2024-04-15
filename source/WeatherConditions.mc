@@ -41,6 +41,7 @@ module EnduranceWatchFace {
 		private const CONDITION_BITMAP_HEIGHT = 16;
 
 		private var conditionsBitmap as BitmapResource;
+		private var arrowsBitmap as BitmapResource;
 
 		private var cache as ExtendedConditions or Null;
 
@@ -53,6 +54,7 @@ module EnduranceWatchFace {
 
 		function initialize() {
 			conditionsBitmap = WatchUi.loadResource(Rez.Drawables.Conditions) as BitmapResource;
+			arrowsBitmap = WatchUi.loadResource(Rez.Drawables.Arrows) as BitmapResource;
 		}
 
 		function get() as ExtendedConditions or Null {
@@ -83,6 +85,15 @@ module EnduranceWatchFace {
 				var idx = cache[:conditionType];
 				dc.setClip(x, y, CONDITION_BITMAP_WIDTH, CONDITION_BITMAP_HEIGHT);
 				dc.drawBitmap(x - idx * CONDITION_BITMAP_WIDTH, y, conditionsBitmap);
+				dc.clearClip();
+			}
+		}
+
+		function drawWindDirection(dc, x, y) {
+			if (cache != null) {
+				var idx = (cache[:windCardinalDirection] + 4) % 8;
+				dc.setClip(x, y, 5, 5);
+				dc.drawBitmap(x - idx * 5, y, arrowsBitmap);
 				dc.clearClip();
 			}
 		}
