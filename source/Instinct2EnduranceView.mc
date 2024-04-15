@@ -62,6 +62,9 @@ class Instinct2EnduranceView extends WatchUi.WatchFace {
 
         var cnd = conditions.get();
         if (cnd != null) {
+            var tempText = Lang.format("$1$°", [cnd[:condition].temperature.format("%d")]);
+            var xpos = 145 - (dc.getTextWidthInPixels(tempText, Graphics.FONT_NUMBER_MILD) + 8) / 2;
+            dc.drawText(xpos + 8, 22, Graphics.FONT_NUMBER_MILD, tempText, Graphics.TEXT_JUSTIFY_LEFT);
 
             var sunrs = cnd[:nextSunsetSunrise];
             BitmapTextDrawer.draw(dc, 50, 24, sunrs.hour.format("%02d"));
